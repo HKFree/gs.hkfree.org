@@ -71,12 +71,12 @@ hr {
 
 .title {
 	padding-left: 40px;
-	background: url(images/icon01.png) no-repeat left top;
+	background: url(../images/icon01.png) no-repeat left top;
 }
 
 .title2 {
 	padding-left: 20px;
-	background: url(images/icon02.png) no-repeat left 5%;
+	background: url(../images/icon02.png) no-repeat left 5%;
 }
 
 /** WRAPPER */

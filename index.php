@@ -13,8 +13,12 @@
   
   <link href="http://fonts.googleapis.com/css?family=Archivo+Narrow:300,400,700" rel="stylesheet" type="text/css">
   <link href="http://fonts.googleapis.com/css?family=Open+Sans|Montserrat:300,400,700" rel="stylesheet" type="text/css">
-  <link href="default.css" rel="stylesheet" type="text/css" media="all">
-  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <link href="assets/default.css" rel="stylesheet" type="text/css" media="all">
+  <link href="assets/rickshaw.css" rel="stylesheet" type="text/css" media="all">
+  
+  <script src="assets/jquery-2.1.3.min.js"></script>
+  <script src="assets/d3.min.js"></script>
+  <script src="assets/rickshaw.js"></script>  
 </head>
 <body>
   <div id="wrapper" class="container">
@@ -38,6 +42,9 @@
   			<div id="box1">
   				<h2 class="title">TeamSpeak status</h2>
   				<p>Aktuálně je online <span style="color:#FE801C;" id="tscount"><?php echo(getCount()); ?></span> lidí z 256.</p>
+          <div id="chart_container">
+          	<div id="chart"></div>
+          </div>
   			</div>
   
   			<div id="box2">
@@ -83,6 +90,51 @@
       setTimeout("loadcount()", 20000);
     }
     setTimeout("loadcount()", 10000);
+  </script>
+  
+  <script>
+  var series_data = [];
+  
+  var graph = new Rickshaw.Graph( {
+  	element: document.getElementById("chart"),
+  	width: 275,
+  	height: 30,
+  	renderer: 'area',
+    series: [{
+      color: '#CCCCCC',
+      data: series_data
+    }] 
+  } );
+  
+  graph.render();
+  
+  function getGraphData() {
+    $.get(
+    "http://elf.bkralik.cz:8086/db/misc/series",
+    {
+      u: "misc",
+      p: "misc",
+      q: "select max(people) from \"teamspeak\" where time > now() - 3d group by time(10m) order asc",
+      time_precision: "s" 
+    }, 
+    getGraphDataCallback
+    ,
+    "json");
+  }
+  
+  function getGraphDataCallback(data) {
+    var points = data[0].points;
+    if(points){
+      $.each(points, function( index, value ) {
+        series_data.push({ x: value[0], y: value[1] });
+      });
+      graph.update();
+    }
+    setTimeout("getGraphData()", 10*60*1000);
+  }
+  
+  getGraphData();
+
   </script>
 </body>
 </html>
