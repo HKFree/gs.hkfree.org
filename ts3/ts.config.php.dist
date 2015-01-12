@@ -1,0 +1,4 @@
+<?php
+define("TS_USERNAME", "xxx");
+define("TS_PASSWORD", "xxx");
+define("TS_IP", "127.0.0.1");
