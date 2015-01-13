@@ -86,47 +86,17 @@
   	</div>
   </div>
   <script type="text/javascript">
-    function loadcount()
-    {
-      $.get('ts3/ts.php', { s: "count" }, function(data) {
-        $('#tscount').html(data);
-      });
-      setTimeout("loadcount()", 20000);
-    }
-    setTimeout("loadcount()", 10000);
-  </script>
+  function loadcount()
+  {
+    $.get('ts3/ts.php', { s: "count" }, function(data) {
+      $('#tscount').html(data);
+    });
+    setTimeout("loadcount()", 20000);
+  }
   
-  <script>
   var series_data = [];
-  
-  var graph = new Rickshaw.Graph( {
-  	element: document.getElementById("chart"),
-  	width: 250,
-  	height: 30,
-  	renderer: 'area',
-    series: [{
-      color: '#AAAAAA',
-      data: series_data
-    }] 
-  } );
-  
-  var hoverDetail = new Rickshaw.Graph.HoverDetail({
-    graph: graph,
-    formatter: function(series, x, y) {
-      var datum = new Date(x*1000); 
-      var people = parseInt(y);
-      var plural = "lidí";
-      if(people == 1)
-        plural = "člověk";
-      else if(people > 1 && people < 5)
-        plural = "lidi";
-        
-  		var content = datum.toString('dddd HH:mm') + " - <span style=\"color:#FFAE6E;\">" + people + "</span> " + plural;
-  		return content;
-	  }
-  });
-
-  graph.render();
+  var graph;
+  var hoverDetail;
   
   function getGraphData() {
     $.get(
@@ -156,8 +126,41 @@
     setTimeout("getGraphData()", 10*60*1000);
   }
   
-  getGraphData();
+  function onLoad()
+  {
+    graph = new Rickshaw.Graph( {
+    	element: document.getElementById("chart"),
+    	width: 250,
+    	height: 30,
+    	renderer: 'area',
+      series: [{
+        color: '#AAAAAA',
+        data: series_data
+      }] 
+    } );
+    
+    hoverDetail = new Rickshaw.Graph.HoverDetail({
+      graph: graph,
+      formatter: function(series, x, y) {
+        var datum = new Date(x*1000); 
+        var people = parseInt(y);
+        var plural = "lidí";
+        if(people == 1)
+          plural = "člověk";
+        else if(people > 1 && people < 5)
+          plural = "lidi";
+          
+    		var content = datum.toString('dddd HH:mm') + " - <span style=\"color:#FFAE6E;\">" + people + "</span> " + plural;
+    		return content;
+  	  }
+    });
+  
+    setTimeout("loadcount()", 10000);
+    graph.render();
+    getGraphData();
+  }
 
+  window.onload = onLoad;
   </script>
 </body>
 </html>
