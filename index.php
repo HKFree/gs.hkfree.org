@@ -19,6 +19,10 @@
   <script src="assets/jquery-2.1.3.min.js"></script>
   <script src="assets/d3.min.js"></script>
   <script src="assets/rickshaw.js"></script>  
+  <script src="assets/date-cs-CZ.js"></script>
+  <style>
+		.rickshaw_graph .detail .x_label { display: none }
+  </style>
 </head>
 <body>
   <div id="wrapper" class="container">
@@ -42,9 +46,9 @@
   			<div id="box1">
   				<h2 class="title">TeamSpeak status</h2>
   				<p>Aktuálně je online <span style="color:#FE801C;" id="tscount"><?php echo(getCount()); ?></span> lidí z 256.</p>
-          <div id="chart_container">
-          	<div id="chart"></div>
-          </div>
+          <p>
+            <div id="chart"></div>
+          </p>
   			</div>
   
   			<div id="box2">
@@ -97,15 +101,31 @@
   
   var graph = new Rickshaw.Graph( {
   	element: document.getElementById("chart"),
-  	width: 275,
+  	width: 250,
   	height: 30,
   	renderer: 'area',
     series: [{
-      color: '#CCCCCC',
+      color: '#AAAAAA',
       data: series_data
     }] 
   } );
   
+  var hoverDetail = new Rickshaw.Graph.HoverDetail({
+    graph: graph,
+    formatter: function(series, x, y) {
+      var datum = new Date(x*1000); 
+      var people = parseInt(y);
+      var plural = "lidí";
+      if(people == 1)
+        plural = "člověk";
+      else if(people > 1 && people < 5)
+        plural = "lidi";
+        
+  		var content = datum.toString('dddd HH:mm') + " - <span style=\"color:#FFAE6E;\">" + people + "</span> " + plural;
+  		return content;
+	  }
+  });
+
   graph.render();
   
   function getGraphData() {
@@ -125,6 +145,9 @@
   function getGraphDataCallback(data) {
     var points = data[0].points;
     if(points){
+      while (series_data.length) { // vymazani pole s daty
+        series_data.pop();
+      }
       $.each(points, function( index, value ) {
         series_data.push({ x: value[0], y: value[1] });
       });
