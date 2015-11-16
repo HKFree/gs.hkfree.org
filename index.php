@@ -83,6 +83,27 @@
   	<div id="footer">
   		<p>Copyright (c) 2015 gameserver.hkfree.org. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>. Spravuje <a href="mailto:bkralik@hkfree.org">bkralik</a><br>
       Status TeamSpeaku se automaticky obnovuje každých 20 sekund.</p>
+      <?php
+        function human_filesize($size, $precision = 2) {
+            $units = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+            $step = 1024;
+            $i = 0;
+            while (($size / $step) > 0.9) {
+                $size = $size / $step;
+                $i++;
+            }
+            return round($size, $precision).' '.$units[$i];
+        }
+        
+        $df = human_filesize(disk_free_space("/"));
+        
+        $loads = sys_getloadavg();
+        $round_loads = array();
+        foreach($loads as $load) {
+          $round_loads[] = sprintf("%.02f", $load); 
+        }
+      ?>
+      <p><i>Free space <?php echo($df); ?>, System load <?php echo(implode(" ", $round_loads)); ?></i></p>
   	</div>
   </div>
   <script type="text/javascript">
