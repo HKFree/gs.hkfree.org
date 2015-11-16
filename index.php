@@ -11,6 +11,8 @@
   <meta name="description" content="Stránky GameServeru HKFree.org">
   <meta name="author" content="bkralik@hkfree.org">
   
+  <link href="favicon.ico" rel="icon" type="image/x-icon">
+  
   <link href="http://fonts.googleapis.com/css?family=Archivo+Narrow:300,400,700" rel="stylesheet" type="text/css">
   <link href="http://fonts.googleapis.com/css?family=Open+Sans|Montserrat:300,400,700" rel="stylesheet" type="text/css">
   <link href="assets/default.css" rel="stylesheet" type="text/css" media="all">
