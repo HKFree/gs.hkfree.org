@@ -41,9 +41,35 @@ function getCount()
   return($mystatus);
 }
 
+function getMonitoringStatus()
+{
+  try
+  {
+    $ts3_VirtualServer = connectTS();
+    $clients = $ts3_VirtualServer->clientList();
+    $count = count($clients);
+    if(($count >= 0) && ($count < 1024)) {
+      $mystatus = "TS-OK";
+    } else {
+      $mystatus = "Error (Generic)!";
+    } 
+  }
+  catch(Exception $e)
+  {
+    $mystatus = "Error (ID " . $e->getCode() . ") <b>" . $e->getMessage() . "</b>";
+  }
+  
+  return($mystatus);
+}
+
 if(isset($_GET["s"]) and ($_GET["s"]=='count'))
 {
   echo(getCount());
+}
+
+if(isset($_GET["s"]) and ($_GET["s"]=='status'))
+{
+  echo(getMonitoringStatus());
 }
 
 if(isset($_GET["s"]) and ($_GET["s"]=='all'))
