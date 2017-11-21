@@ -56,15 +56,16 @@
   			<div id="box2">
   				<h2 class="title">Novinky</h2>
   				<ul class="style3">
-			            <li><img src="images/img02.jpg" width="78" height="78" alt="">
-  						<p>Z důvodu opakovaných DDoS útoků na TeamSpeak je server dočasně dostupný <b>pouze z vnitřní sítě HKFree!</b> Informace o dalším postupu se budou objevovat zde..</p>
-  						<p class="posted">18. listopadu 2017</p>
+			            <li class="first"><img src="images/ts.png" width="78" height="78" alt="">
+<!--  						<p>Z důvodu opakovaných DDoS útoků na TeamSpeak je server dočasně dostupný <b>pouze z vnitřní sítě HKFree!</b> Informace o dalším postupu se budou objevovat zde..</p>-->
+  						<p>Provoz TeamSpeaku <b>byl obnoven</b>, v případě dalších útoků Vás budeme informovat!</p>
+  						<p class="posted">21. listopadu 2017</p>
   					</li>
 			            <li><img src="images/github.png" width="78" height="78" alt="">
   						<p>Proběhl update stránek, zdroják byl přidán na <a href="http://github.com/HKFree/gs.hkfree.org">Github</a></p>
   						<p class="posted">12. ledna 2015</p>
   					</li>
-				    <li class="first"><img src="images/img03.jpg" width="78" height="78" alt="">
+				    <li><img src="images/img03.jpg" width="78" height="78" alt="">
   						<p>Dostali jsme Non-profit licenci na teamspeak, takže máme 512 volných slotů!</p>
   						<p class="posted">16. února 2013</p>
   					</li>
